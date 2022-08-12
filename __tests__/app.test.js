@@ -14,7 +14,7 @@ describe('why-i-autha routes', () => {
     pool.end();
   });
 
-  it('should redirect to the github oauth page upon login', async () => {
+  it.skip('should redirect to the github oauth page upon login', async () => {
     const res = await request(app).get('/api/v1/github/login');
 
     expect(res.header.location).toMatch(
@@ -25,7 +25,7 @@ describe('why-i-autha routes', () => {
   it('should login and redirect users to /api/v1/github/dashboard', async () => {
     const res = await request
       .agent(app)
-      .get('/api/v1/github/login/callback?code=42')
+      .get('/api/v1/github/callback?code=42')
       .redirects(1);
 
     expect(res.body).toEqual({
@@ -36,5 +36,10 @@ describe('why-i-autha routes', () => {
       iat: expect.any(Number),
       exp: expect.any(Number),
     });
+  });
+  it('Delete, /sessions deletes user session', async () => {
+    const res = await request.agent(app).delete('/api/v1/github');
+    
+    expect(res.body).toEqual({ success: true, message: 'Signed out successfully!' });
   });
 });
