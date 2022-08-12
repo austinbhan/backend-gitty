@@ -15,3 +15,9 @@ CREATE TABLE posts (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   description TEXT NOT NULL
 );
+
+INSERT INTO posts (description) VALUES
+('Post Number 1'),
+('Post Number 2'),
+('Post Number 3'),
+('Post Number 4');  
